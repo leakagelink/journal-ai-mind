@@ -1,5 +1,6 @@
 
 import { Capacitor } from '@capacitor/core';
+import { FacebookAds } from '@/plugins/FacebookAds';
 
 declare global {
   interface Window {
@@ -39,7 +40,6 @@ export class AdsService {
 
   private async initializeNativeAds(): Promise<void> {
     try {
-      const { FacebookAds } = await import('@capacitor-community/facebook-ads');
       await FacebookAds.initialize({
         testMode: true,
         initializeForTesting: true
@@ -81,7 +81,6 @@ export class AdsService {
   async showBannerAd(adUnitId: string = 'IMG_16_9_APP_INSTALL#1102290566500541_1102290633167201'): Promise<void> {
     try {
       if (Capacitor.isNativePlatform()) {
-        const { FacebookAds } = await import('@capacitor-community/facebook-ads');
         await FacebookAds.showBanner({
           adId: adUnitId,
           position: 'bottom'
@@ -97,7 +96,6 @@ export class AdsService {
   async showInterstitialAd(adUnitId: string = 'IMG_16_9_APP_INSTALL#1102290566500541_1102290703167194'): Promise<void> {
     try {
       if (Capacitor.isNativePlatform()) {
-        const { FacebookAds } = await import('@capacitor-community/facebook-ads');
         await FacebookAds.showInterstitial({
           adId: adUnitId
         });
@@ -112,7 +110,6 @@ export class AdsService {
   async hideBannerAd(): Promise<void> {
     try {
       if (Capacitor.isNativePlatform()) {
-        const { FacebookAds } = await import('@capacitor-community/facebook-ads');
         await FacebookAds.hideBanner();
       }
     } catch (error) {
