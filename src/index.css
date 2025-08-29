@@ -3,14 +3,14 @@
 @tailwind components;
 @tailwind utilities;
 
-/* AI Chat Journal Design System - Beautiful gradients and modern styling */
+/* AI Chat Journal Design System - Orange/Yellow Theme */
 
 @layer base {
   :root {
-    /* Primary Brand Colors - Purple/Blue Gradient Theme */
-    --primary: 262 83% 58%;
-    --primary-foreground: 210 40% 98%;
-    --primary-gradient: linear-gradient(135deg, hsl(262 83% 58%) 0%, hsl(243 75% 59%) 100%);
+    /* Primary Brand Colors - Orange/Yellow Theme */
+    --primary: 33 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --primary-gradient: linear-gradient(135deg, hsl(33 100% 50%) 0%, hsl(45 100% 55%) 100%);
     
     /* Secondary Colors */
     --secondary: 220 14.3% 95.9%;
@@ -19,7 +19,7 @@
     /* Background System */
     --background: 0 0% 100%;
     --background-alt: 220 14.3% 95.9%;
-    --background-gradient: linear-gradient(135deg, hsl(262 83% 98%) 0%, hsl(243 75% 97%) 100%);
+    --background-gradient: linear-gradient(135deg, hsl(33 100% 98%) 0%, hsl(45 100% 97%) 100%);
     
     /* Surface Colors */
     --card: 0 0% 100%;
@@ -33,9 +33,9 @@
     --muted-foreground: 215.4 16.3% 46.9%;
     
     /* Interactive States */
-    --accent: 262 83% 58%;
-    --accent-foreground: 210 40% 98%;
-    --hover: 262 83% 65%;
+    --accent: 33 100% 50%;
+    --accent-foreground: 0 0% 100%;
+    --hover: 33 100% 45%;
     
     /* Semantic Colors */
     --success: 142 76% 36%;
@@ -48,14 +48,14 @@
     /* Border and Input */
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 262 83% 58%;
+    --ring: 33 100% 50%;
     
     /* Chat Specific Colors */
-    --chat-user-bg: 262 83% 58%;
-    --chat-user-text: 210 40% 98%;
+    --chat-user-bg: 33 100% 50%;
+    --chat-user-text: 0 0% 100%;
     --chat-ai-bg: 220 14.3% 95.9%;
     --chat-ai-text: 222.2 84% 4.9%;
-    --chat-bubble-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
+    --chat-bubble-shadow: 0 2px 8px rgba(255, 153, 0, 0.1);
     
     /* Animations */
     --animate-gradient: gradient-shift 6s ease-in-out infinite;

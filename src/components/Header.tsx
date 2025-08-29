@@ -1,4 +1,3 @@
-
 import { Menu, Settings, Search, Info, Shield, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
@@ -18,8 +17,8 @@ const Header = ({ onNavigate }: HeaderProps) => {
 
   return (
     <>
-      <header className="glass-effect border-b border-white/20 px-4 py-3 sticky top-0 z-40">
-        <div className="flex items-center justify-between max-w-md mx-auto">
+      <header className="glass-effect border-b border-white/20 px-4 py-4 sticky top-0 z-40 pt-safe-top">
+        <div className="flex items-center justify-between max-w-md mx-auto mt-2">
           <div className="flex items-center space-x-3">
             <Button 
               variant="ghost" 
