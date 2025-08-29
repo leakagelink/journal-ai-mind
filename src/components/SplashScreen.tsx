@@ -11,15 +11,16 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
   const [animationPhase, setAnimationPhase] = useState(0);
 
   useEffect(() => {
-    // Animation phases
-    const phase1 = setTimeout(() => setAnimationPhase(1), 500);
-    const phase2 = setTimeout(() => setAnimationPhase(2), 1000);
-    const phase3 = setTimeout(() => setAnimationPhase(3), 1500);
+    // Faster animation phases
+    const phase1 = setTimeout(() => setAnimationPhase(1), 200);
+    const phase2 = setTimeout(() => setAnimationPhase(2), 500);
+    const phase3 = setTimeout(() => setAnimationPhase(3), 800);
     
+    // Shorter duration
     const timer = setTimeout(() => {
       setIsVisible(false);
-      setTimeout(onComplete, 500);
-    }, 3000);
+      setTimeout(onComplete, 300);
+    }, 1500);
 
     return () => {
       clearTimeout(phase1);
@@ -31,7 +32,7 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
 
   if (!isVisible) {
     return (
-      <div className="fixed inset-0 bg-gradient-primary animate-fade-out opacity-0 pointer-events-none transition-opacity duration-500" />
+      <div className="fixed inset-0 bg-gradient-primary animate-fade-out opacity-0 pointer-events-none transition-opacity duration-300" />
     );
   }
 
@@ -39,15 +40,15 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
     <div className="fixed inset-0 bg-gradient-to-br from-primary via-purple-600 to-pink-600 flex items-center justify-center z-50 overflow-hidden">
       {/* Animated background particles */}
       <div className="absolute inset-0">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(15)].map((_, i) => (
           <div
             key={i}
             className="absolute w-2 h-2 bg-white/20 rounded-full animate-float"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${3 + Math.random() * 2}s`,
+              animationDelay: `${Math.random() * 2}s`,
+              animationDuration: `${2 + Math.random() * 1.5}s`,
             }}
           />
         ))}
@@ -55,7 +56,7 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
 
       <div className="text-center relative z-10">
         {/* Logo container with modern effects */}
-        <div className={`relative mb-8 transition-all duration-1000 ${
+        <div className={`relative mb-8 transition-all duration-500 ${
           animationPhase >= 1 ? 'scale-100 opacity-100' : 'scale-75 opacity-0'
         }`}>
           {/* Glowing background effect */}
@@ -64,7 +65,7 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
           </div>
           
           {/* Main logo */}
-          <div className={`relative transition-all duration-1000 ${
+          <div className={`relative transition-all duration-500 ${
             animationPhase >= 2 ? 'animate-float' : ''
           }`}>
             <div className="w-24 h-24 mx-auto rounded-full bg-white/20 backdrop-blur-md border-2 border-white/30 flex items-center justify-center shadow-2xl">
@@ -82,7 +83,7 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
         </div>
         
         {/* App name with typing effect */}
-        <div className={`transition-all duration-1000 delay-500 ${
+        <div className={`transition-all duration-500 delay-300 ${
           animationPhase >= 2 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
         }`}>
           <h1 className="text-4xl font-bold text-white mb-3 font-display tracking-wide">
@@ -101,7 +102,7 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
         </div>
         
         {/* Loading indicator */}
-        <div className={`transition-all duration-1000 delay-1000 ${
+        <div className={`transition-all duration-500 delay-500 ${
           animationPhase >= 3 ? 'opacity-100' : 'opacity-0'
         }`}>
           <div className="flex justify-center space-x-3 mb-4">
@@ -109,7 +110,7 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
             <div className="w-3 h-3 bg-white/70 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
             <div className="w-3 h-3 bg-white/70 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
           </div>
-          <p className="text-white/60 text-xs">Loading your companion...</p>
+          <p className="text-white/60 text-xs">Ready to start...</p>
         </div>
       </div>
     </div>

@@ -85,19 +85,81 @@
     </noscript>
     
     <div id="root">
-      <div style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-        <div style="text-align: center; color: white;">
-          <div style="width: 60px; height: 60px; border: 4px solid #ffffff; border-top: 4px solid transparent; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
-          <h2>Loading HeartLog AI...</h2>
-          <p>Your personal AI companion is starting up</p>
+      <div style="position: fixed; inset: 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #db2777 100%); display: flex; align-items: center; justify-content: center; z-index: 9999; overflow: hidden;">
+        <!-- Animated background particles -->
+        <div style="position: absolute; inset: 0;">
+          <div style="position: absolute; width: 8px; height: 8px; background: rgba(255,255,255,0.2); border-radius: 50%; top: 20%; left: 15%; animation: float 3s ease-in-out infinite;"></div>
+          <div style="position: absolute; width: 6px; height: 6px; background: rgba(255,255,255,0.15); border-radius: 50%; top: 60%; left: 80%; animation: float 4s ease-in-out infinite 1s;"></div>
+          <div style="position: absolute; width: 10px; height: 10px; background: rgba(255,255,255,0.1); border-radius: 50%; top: 80%; left: 30%; animation: float 5s ease-in-out infinite 0.5s;"></div>
+          <div style="position: absolute; width: 4px; height: 4px; background: rgba(255,255,255,0.25); border-radius: 50%; top: 30%; left: 70%; animation: float 3.5s ease-in-out infinite 2s;"></div>
+        </div>
+        
+        <div style="text-align: center; position: relative; z-index: 10;">
+          <!-- Logo container -->
+          <div style="position: relative; margin-bottom: 32px; animation: scaleIn 1s ease-out;">
+            <!-- Glowing background effect -->
+            <div style="position: absolute; inset: 0; animation: pulse 2s cubic-bezier(0.4,0,0.6,1) infinite;">
+              <div style="width: 96px; height: 96px; margin: 0 auto; border-radius: 50%; background: rgba(255,255,255,0.1); backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.2);"></div>
+            </div>
+            
+            <!-- Main logo -->
+            <div style="position: relative; animation: float 3s ease-in-out infinite;">
+              <div style="width: 96px; height: 96px; margin: 0 auto; border-radius: 50%; background: rgba(255,255,255,0.2); backdrop-filter: blur(8px); border: 2px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);">
+                <img src="/lovable-uploads/de606a59-5688-41ce-875d-87d92367d4c3.png" alt="HeartLog AI" style="width: 64px; height: 64px; object-fit: contain;" />
+              </div>
+              
+              <!-- Sparkle effects -->
+              <div style="position: absolute; top: -8px; right: -8px; width: 24px; height: 24px; color: #fde047; animation: pulse 1.5s ease-in-out infinite;">✨</div>
+              <div style="position: absolute; bottom: -4px; left: -4px; width: 16px; height: 16px; color: #fda4af; animation: pulse 1.5s ease-in-out infinite 0.5s;">💖</div>
+            </div>
+          </div>
+          
+          <!-- App name -->
+          <div style="animation: fadeInUp 1s ease-out 0.5s both;">
+            <h1 style="font-size: 36px; font-weight: bold; color: white; margin-bottom: 12px; font-family: system-ui, -apple-system, sans-serif; letter-spacing: 0.05em;">
+              HeartLog AI
+            </h1>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px;">
+              <span style="color: #fda4af;">💖</span>
+              <p style="color: rgba(255,255,255,0.9); font-size: 18px; font-weight: 500; margin: 0;">
+                Your Personal AI Companion
+              </p>
+              <span style="color: #fda4af;">💖</span>
+            </div>
+            <p style="color: rgba(255,255,255,0.7); font-size: 14px; margin: 0 0 32px 0;">
+              Journal • Chat • Mood Tracking
+            </p>
+          </div>
+          
+          <!-- Loading indicator -->
+          <div style="animation: fadeInUp 1s ease-out 1s both;">
+            <div style="display: flex; justify-content: center; gap: 12px; margin-bottom: 16px;">
+              <div style="width: 12px; height: 12px; background: rgba(255,255,255,0.7); border-radius: 50%; animation: pulse 1.4s ease-in-out infinite;"></div>
+              <div style="width: 12px; height: 12px; background: rgba(255,255,255,0.7); border-radius: 50%; animation: pulse 1.4s ease-in-out infinite 0.2s;"></div>
+              <div style="width: 12px; height: 12px; background: rgba(255,255,255,0.7); border-radius: 50%; animation: pulse 1.4s ease-in-out infinite 0.4s;"></div>
+            </div>
+            <p style="color: rgba(255,255,255,0.6); font-size: 12px; margin: 0;">Loading your companion...</p>
+          </div>
         </div>
       </div>
     </div>
     
     <style>
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+      }
+      @keyframes scaleIn {
+        0% { transform: scale(0.8); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+      }
+      @keyframes fadeInUp {
+        0% { transform: translateY(20px); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
       }
     </style>
     
