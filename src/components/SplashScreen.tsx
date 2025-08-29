@@ -11,16 +11,22 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
   const [animationPhase, setAnimationPhase] = useState(0);
 
   useEffect(() => {
-    // Animation phases
-    const phase1 = setTimeout(() => setAnimationPhase(1), 500);
-    const phase2 = setTimeout(() => setAnimationPhase(2), 1000);
-    const phase3 = setTimeout(() => setAnimationPhase(3), 1500);
+    // Hide the instant splash screen when React component mounts
+    const instantSplash = document.getElementById('instant-splash');
+    if (instantSplash) {
+      instantSplash.style.display = 'none';
+    }
+
+    // Animation phases - start immediately since instant splash is already shown
+    const phase1 = setTimeout(() => setAnimationPhase(1), 100);
+    const phase2 = setTimeout(() => setAnimationPhase(2), 400);
+    const phase3 = setTimeout(() => setAnimationPhase(3), 700);
     
-    // Original duration
+    // Shorter duration since user already saw instant splash
     const timer = setTimeout(() => {
       setIsVisible(false);
       setTimeout(onComplete, 300);
-    }, 3000);
+    }, 2200);
 
     return () => {
       clearTimeout(phase1);

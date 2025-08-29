@@ -74,6 +74,87 @@
       }
     }
     </script>
+    
+    <style>
+      /* Instant loading splash screen to prevent white flash */
+      #instant-splash {
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #db2777 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        opacity: 1;
+        transition: opacity 0.3s ease-out;
+      }
+      
+      #instant-splash.fade-out {
+        opacity: 0;
+        pointer-events: none;
+      }
+      
+      .instant-logo {
+        text-align: center;
+        animation: pulse 2s ease-in-out infinite;
+      }
+      
+      .instant-logo-container {
+        width: 96px;
+        height: 96px;
+        margin: 0 auto 24px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.2);
+        backdrop-filter: blur(12px);
+        border: 2px solid rgba(255,255,255,0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      }
+      
+      .instant-title {
+        color: white;
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 12px;
+        letter-spacing: 0.05em;
+      }
+      
+      .instant-subtitle {
+        color: rgba(255,255,255,0.9);
+        font-size: 1.125rem;
+        font-weight: 500;
+        margin-bottom: 32px;
+      }
+      
+      .instant-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+      }
+      
+      .instant-dot {
+        width: 12px;
+        height: 12px;
+        background: rgba(255,255,255,0.7);
+        border-radius: 50%;
+        animation: pulse-dot 1.4s ease-in-out infinite;
+      }
+      
+      .instant-dot:nth-child(2) { animation-delay: 0.2s; }
+      .instant-dot:nth-child(3) { animation-delay: 0.4s; }
+      
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+      }
+      
+      @keyframes pulse-dot {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.5; transform: scale(0.8); }
+      }
+    </style>
   </head>
 
   <body>
@@ -84,7 +165,38 @@
       </div>
     </noscript>
     
+    <!-- Instant splash screen to prevent white flash -->
+    <div id="instant-splash">
+      <div class="instant-logo">
+        <div class="instant-logo-container">
+          <img src="/lovable-uploads/de606a59-5688-41ce-875d-87d92367d4c3.png" alt="HeartLog AI" style="width: 64px; height: 64px; object-fit: contain;" />
+        </div>
+        <h1 class="instant-title">HeartLog AI</h1>
+        <p class="instant-subtitle">Your Personal AI Companion</p>
+        <div class="instant-dots">
+          <div class="instant-dot"></div>
+          <div class="instant-dot"></div>
+          <div class="instant-dot"></div>
+        </div>
+      </div>
+    </div>
+    
     <div id="root"></div>
+    
+    <script>
+      // Hide instant splash when React is ready
+      document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+          const instantSplash = document.getElementById('instant-splash');
+          if (instantSplash) {
+            instantSplash.classList.add('fade-out');
+            setTimeout(function() {
+              instantSplash.style.display = 'none';
+            }, 300);
+          }
+        }, 800); // Give React time to mount
+      });
+    </script>
     
     <script type="module" src="/src/main.tsx"></script>
   </body>
