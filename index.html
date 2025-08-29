@@ -3,44 +3,104 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>HeartLog AI - Personal AI Companion</title>
     <meta name="description" content="HeartLog AI - Your Personal AI Companion for Journaling, Mood Tracking and Emotional Well-being. Private, secure, and designed with love." />
-    <meta name="author" content="HeartLog AI" />
-    <meta name="keywords" content="journal, AI companion, mood tracking, emotional wellness, mental health, private journaling, personal growth" />
+    <meta name="author" content="HeartLog AI Team" />
+    <meta name="keywords" content="journal, AI companion, mood tracking, emotional wellness, mental health, private journaling, personal growth, mindfulness, self-care" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+    
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; connect-src 'self' https: wss:; font-src 'self' data: https:;">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="HeartLog AI - Personal AI Companion" />
-    <meta property="og:description" content="Your Personal AI Companion for Journaling, Mood Tracking and Emotional Well-being" />
+    <meta property="og:description" content="Your Personal AI Companion for Journaling, Mood Tracking and Emotional Well-being. Private and secure digital wellness platform." />
     <meta property="og:image" content="/lovable-uploads/de606a59-5688-41ce-875d-87d92367d4c3.png" />
     <meta property="og:url" content="https://heartlog-ai.lovable.app" />
+    <meta property="og:site_name" content="HeartLog AI" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="HeartLog AI - Personal AI Companion" />
     <meta name="twitter:description" content="Your Personal AI Companion for Journaling, Mood Tracking and Emotional Well-being" />
     <meta name="twitter:image" content="/lovable-uploads/de606a59-5688-41ce-875d-87d92367d4c3.png" />
+    <meta name="twitter:site" content="@HeartLogAI" />
 
     <!-- App-specific meta tags -->
     <meta name="application-name" content="HeartLog AI" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="HeartLog AI" />
     
     <!-- Theme colors -->
     <meta name="theme-color" content="#db2777" />
     <meta name="msapplication-navbutton-color" content="#db2777" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
-    <!-- Favicon -->
+    <meta name="msapplication-TileColor" content="#db2777" />
+    
+    <!-- Favicon and icons -->
     <link rel="icon" type="image/png" href="/lovable-uploads/de606a59-5688-41ce-875d-87d92367d4c3.png" />
     <link rel="apple-touch-icon" href="/lovable-uploads/de606a59-5688-41ce-875d-87d92367d4c3.png" />
+    <link rel="shortcut icon" href="/lovable-uploads/de606a59-5688-41ce-875d-87d92367d4c3.png" />
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://connect.facebook.net" />
+    
+    <!-- Privacy and Policy links -->
+    <link rel="privacy-policy" href="/privacy" />
+    <link rel="terms-of-service" href="/terms" />
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MobileApplication",
+      "name": "HeartLog AI",
+      "description": "Your Personal AI Companion for Journaling, Mood Tracking and Emotional Well-being",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "Android, iOS, Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "HeartLog AI Team"
+      }
+    }
+    </script>
   </head>
 
   <body>
-    <div id="root"></div>
+    <noscript>
+      <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
+        <h1>JavaScript Required</h1>
+        <p>HeartLog AI requires JavaScript to function properly. Please enable JavaScript in your browser settings.</p>
+      </div>
+    </noscript>
+    
+    <div id="root">
+      <div style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <div style="text-align: center; color: white;">
+          <div style="width: 60px; height: 60px; border: 4px solid #ffffff; border-top: 4px solid transparent; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
+          <h2>Loading HeartLog AI...</h2>
+          <p>Your personal AI companion is starting up</p>
+        </div>
+      </div>
+    </div>
+    
+    <style>
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+    
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -10,14 +10,23 @@ import SettingsView from '@/components/SettingsView';
 import PrivacyPolicy from '@/components/PrivacyPolicy';
 import TermsOfService from '@/components/TermsOfService';
 import About from '@/components/About';
+import AdBanner from '@/components/AdBanner';
+import { useAds } from '@/hooks/useAds';
 
 const Index = () => {
   const [showSplash, setShowSplash] = useState(true);
   const [activeTab, setActiveTab] = useState('chat');
   const [currentPage, setCurrentPage] = useState('main');
+  const { showInterstitialAd, isInitialized } = useAds();
 
   const handleSplashComplete = () => {
     setShowSplash(false);
+    // Show interstitial ad after splash screen
+    if (isInitialized) {
+      setTimeout(() => {
+        showInterstitialAd();
+      }, 3000);
+    }
   };
 
   const handleNavigation = (page: string) => {
@@ -68,6 +77,11 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-soft flex flex-col max-w-md mx-auto relative">
       <Header onNavigate={handleNavigation} />
+      
+      {/* Ad Banner at top */}
+      <div className="px-4 pt-2">
+        <AdBanner className="mb-2" />
+      </div>
       
       <main className="flex-1 overflow-hidden pb-16">
         {renderCurrentPage()}

@@ -1,0 +1,15 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HeartLog AI</string>
+    <string name="title_activity_main">HeartLog AI</string>
+    <string name="package_name">app.lovable.fc31d0ad638c49a5b87ccb67b53f98e1</string>
+    <string name="custom_url_scheme">app.lovable.fc31d0ad638c49a5b87ccb67b53f98e1</string>
+    
+    <!-- Facebook App Configuration -->
+    <string name="facebook_app_id">your_facebook_app_id</string>
+    <string name="facebook_client_token">your_facebook_client_token</string>
+    
+    <!-- App Description for Play Store -->
+    <string name="app_description">HeartLog AI - Your Personal AI Companion for Journaling, Mood Tracking and Emotional Well-being. Private, secure, and designed with love.</string>
+</resources>
