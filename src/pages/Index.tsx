@@ -83,7 +83,7 @@ const Index = () => {
         <AdBanner className="mb-2" />
       </div>
       
-      <main className="flex-1 overflow-hidden pb-16">
+      <main className="flex-1 overflow-y-auto pb-16">
         {renderCurrentPage()}
       </main>
       

@@ -72,10 +72,24 @@
   * {
     @apply border-border;
   }
+  
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+  
   body {
     @apply bg-background text-foreground font-sans antialiased;
     background: var(--background-gradient);
     min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Ensure proper scrolling on mobile */
+  #root {
+    min-height: 100vh;
+    overflow-x: hidden;
   }
 }
 
@@ -120,6 +134,12 @@
   
   .pt-safe-top {
     padding-top: env(safe-area-inset-top);
+  }
+  
+  /* Smooth scrolling utilities */
+  .scroll-smooth {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
   }
 }
 

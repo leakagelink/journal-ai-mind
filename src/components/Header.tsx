@@ -1,3 +1,4 @@
+
 import { Menu, Settings, Search, Info, Shield, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
@@ -17,8 +18,8 @@ const Header = ({ onNavigate }: HeaderProps) => {
 
   return (
     <>
-      <header className="glass-effect border-b border-white/20 px-4 py-4 sticky top-0 z-40 pt-safe-top">
-        <div className="flex items-center justify-between max-w-md mx-auto mt-2">
+      <header className="glass-effect border-b border-white/20 px-4 py-4 sticky top-0 z-40 shrink-0">
+        <div className="flex items-center justify-between max-w-md mx-auto">
           <div className="flex items-center space-x-3">
             <Button 
               variant="ghost" 
@@ -60,7 +61,7 @@ const Header = ({ onNavigate }: HeaderProps) => {
       {/* Navigation Menu */}
       {showMenu && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50" onClick={() => setShowMenu(false)}>
-          <div className="absolute top-16 left-4 right-4 bg-surface border border-border rounded-lg shadow-lg animate-slide-in">
+          <div className="absolute top-20 left-4 right-4 bg-surface border border-border rounded-lg shadow-lg animate-slide-in max-w-md mx-auto">
             {menuItems.map((item) => {
               const Icon = item.icon;
               return (
