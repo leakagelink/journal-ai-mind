@@ -21,11 +21,11 @@ const Index = () => {
 
   const handleSplashComplete = () => {
     setShowSplash(false);
-    // Show interstitial ad after splash screen
+    // Show interstitial ad after splash screen with a small delay
     if (isInitialized) {
       setTimeout(() => {
         showInterstitialAd();
-      }, 3000);
+      }, 2000);
     }
   };
 

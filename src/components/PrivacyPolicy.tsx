@@ -46,12 +46,37 @@ const PrivacyPolicy = ({ onBack }: PrivacyPolicyProps) => {
             </p>
             <p>
               <strong>AI Processing:</strong> When you interact with the AI companion, your messages are 
-              processed through secure AI services to provide responses. These messages are not stored 
-              permanently by us or third-party services.
+              processed through secure AI services to provide responses. Messages sent to AI service 
+              providers are processed temporarily only for generating responses and are not stored, 
+              profiled, or used for advertising.
             </p>
             <p>
               <strong>No Analytics Tracking:</strong> We do not use analytics services that track your 
               behavior, collect personal data, or create user profiles.
+            </p>
+          </div>
+        </Card>
+
+        <Card className="p-6 border border-border">
+          <h3 className="text-lg font-semibold mb-4">Advertisement Policy</h3>
+          <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
+            <p>
+              <strong>Advertisement Usage:</strong> HeartLog AI may display advertisements to support 
+              the free version of the application. We use reputable advertising networks that comply 
+              with privacy standards.
+            </p>
+            <p>
+              <strong>Ad Data:</strong> Advertising partners may collect limited, non-personal data 
+              for ad targeting purposes. This does not include your personal journal entries, chat 
+              conversations, or sensitive personal information.
+            </p>
+            <p>
+              <strong>Ad-Free Option:</strong> We are committed to providing options for users who 
+              prefer an ad-free experience through premium subscriptions in the future.
+            </p>
+            <p>
+              <strong>Third-Party Ad Networks:</strong> We work with trusted advertising partners 
+              who follow industry-standard privacy practices and do not access your personal content.
             </p>
           </div>
         </Card>
@@ -82,12 +107,13 @@ const PrivacyPolicy = ({ onBack }: PrivacyPolicyProps) => {
               These services process your messages temporarily but do not store them permanently.
             </p>
             <p>
-              <strong>No Social Media Integration:</strong> We do not integrate with social media platforms 
-              or share your data with social networks.
+              <strong>Advertising Services:</strong> We may use third-party advertising services to 
+              display ads. These services may collect anonymous usage data but do not access your 
+              personal journal content.
             </p>
             <p>
-              <strong>No Advertising Networks:</strong> We do not use advertising networks that track users 
-              or collect personal information for advertising purposes.
+              <strong>No Social Media Integration:</strong> We do not integrate with social media platforms 
+              or share your personal data with social networks.
             </p>
           </div>
         </Card>
@@ -117,7 +143,7 @@ const PrivacyPolicy = ({ onBack }: PrivacyPolicyProps) => {
           <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
           <p className="text-sm text-muted-foreground">
             If you have any questions about this Privacy Policy or how we handle your data, 
-            please contact us through the app settings or visit our support page.
+            please contact us at: <strong>hello@socilet.com</strong>
           </p>
           <p className="text-xs text-muted-foreground mt-2">
             Last updated: {new Date().toLocaleDateString()}

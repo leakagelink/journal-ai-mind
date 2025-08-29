@@ -63,6 +63,26 @@ const TermsOfService = ({ onBack }: TermsOfServiceProps) => {
             </p>
           </div>
         </Card>
+
+        <Card className="p-6 border border-border">
+          <h3 className="text-lg font-semibold mb-4">Advertisement Policy</h3>
+          <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
+            <p>
+              <strong>Ad-Supported Service:</strong> HeartLog AI may display advertisements to support 
+              the free version of our service. By using the app, you agree to the display of these 
+              advertisements.
+            </p>
+            <p>
+              <strong>Ad Content:</strong> We strive to show relevant and appropriate advertisements. 
+              However, we are not responsible for the content of third-party advertisements.
+            </p>
+            <p>
+              <strong>Ad Interaction:</strong> Clicking on advertisements will redirect you to 
+              third-party websites or applications. We are not responsible for the privacy practices 
+              or content of these external sites.
+            </p>
+          </div>
+        </Card>
         
         <Card className="p-6 border border-border">
           <h3 className="text-lg font-semibold mb-4">Acceptable Use Policy</h3>
@@ -75,6 +95,7 @@ const TermsOfService = ({ onBack }: TermsOfServiceProps) => {
               <li>Use the app to harass, threaten, or harm others</li>
               <li>Violate any applicable laws or regulations</li>
               <li>Share your account access with unauthorized persons</li>
+              <li>Block, disable, or circumvent advertisements</li>
             </ul>
           </div>
         </Card>
@@ -142,8 +163,7 @@ const TermsOfService = ({ onBack }: TermsOfServiceProps) => {
         <Card className="p-6 border border-border bg-gradient-to-br from-primary/5 to-purple-500/5">
           <h3 className="text-lg font-semibold mb-4">Contact Information</h3>
           <p className="text-sm text-muted-foreground">
-            For questions about these Terms of Service, please contact us through the app settings 
-            or our official support channels.
+            For questions about these Terms of Service, please contact us at: <strong>hello@socilet.com</strong>
           </p>
           <p className="text-xs text-muted-foreground mt-2">
             Last updated: {new Date().toLocaleDateString()}
