@@ -11,16 +11,16 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
   const [animationPhase, setAnimationPhase] = useState(0);
 
   useEffect(() => {
-    // Faster animation phases
-    const phase1 = setTimeout(() => setAnimationPhase(1), 200);
-    const phase2 = setTimeout(() => setAnimationPhase(2), 500);
-    const phase3 = setTimeout(() => setAnimationPhase(3), 800);
+    // Animation phases
+    const phase1 = setTimeout(() => setAnimationPhase(1), 500);
+    const phase2 = setTimeout(() => setAnimationPhase(2), 1000);
+    const phase3 = setTimeout(() => setAnimationPhase(3), 1500);
     
-    // Shorter duration
+    // Original duration
     const timer = setTimeout(() => {
       setIsVisible(false);
       setTimeout(onComplete, 300);
-    }, 1500);
+    }, 3000);
 
     return () => {
       clearTimeout(phase1);
