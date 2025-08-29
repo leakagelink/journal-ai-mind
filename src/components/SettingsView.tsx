@@ -1,7 +1,8 @@
 
-import { User, Shield, Info, FileText, Trash2, Download, Heart } from 'lucide-react';
+import { User, Shield, Info, FileText, Trash2, Download, Heart, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import LanguageSelector from './LanguageSelector';
 
 interface SettingsViewProps {
   onNavigate?: (page: string) => void;
@@ -66,6 +67,24 @@ const SettingsView = ({ onNavigate }: SettingsViewProps) => {
             </div>
           </div>
         </Card>
+
+        {/* Language Settings */}
+        <div className="space-y-3">
+          <h3 className="font-semibold text-lg flex items-center">
+            <Globe className="w-5 h-5 mr-2 text-primary" />
+            Language Settings
+          </h3>
+          
+          <Card className="p-4 border border-border">
+            <div className="flex items-center justify-between">
+              <div>
+                <h4 className="font-medium">App Language</h4>
+                <p className="text-sm text-muted-foreground">Choose your preferred language</p>
+              </div>
+              <LanguageSelector />
+            </div>
+          </Card>
+        </div>
 
         {/* App Information */}
         <div className="space-y-3">
