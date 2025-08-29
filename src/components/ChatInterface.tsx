@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from 'react';
 import { Send, Mic, Image, Trash2, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -194,108 +193,112 @@ const ChatInterface = () => {
         </div>
       </div>
 
-      {/* Messages Area with proper scrolling */}
-      <ScrollArea className="flex-1 px-4">
-        <div className="py-4 space-y-4">
-          {messages.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full text-center space-y-4 min-h-[400px]">
-              <div className="w-16 h-16 rounded-full bg-gradient-primary/10 flex items-center justify-center">
-                <span className="text-2xl">💭</span>
-              </div>
-              <div>
-                <h3 className="font-semibold text-foreground mb-2">AI Chat शुरू करें</h3>
-                <p className="text-muted-foreground text-sm max-w-sm">
-                  अपने विचार, भावनाएं या कोई भी बात साझा करें। मैं यहां सुनने के लिए हूं।
-                </p>
-              </div>
-            </div>
-          ) : (
-            messages.map((message) => (
-              <div
-                key={message.id}
-                className={`flex ${message.isUser ? 'justify-end' : 'justify-start'} animate-slide-in`}
-              >
-                <div
-                  className={`max-w-[85%] rounded-2xl px-4 py-3 shadow-sm ${
-                    message.isUser
-                      ? 'bg-gradient-primary text-white ml-4'
-                      : message.isError
-                      ? 'bg-destructive/10 border border-destructive/20 text-destructive mr-4'
-                      : 'bg-surface border border-border mr-4'
-                  }`}
-                >
-                  <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.text}</p>
-                  <p className={`text-xs mt-2 ${
-                    message.isUser 
-                      ? 'text-white/70' 
-                      : message.isError 
-                      ? 'text-destructive/70'
-                      : 'text-muted-foreground'
-                  }`}>
-                    {message.timestamp.toLocaleTimeString('hi-IN', { 
-                      hour: '2-digit', 
-                      minute: '2-digit' 
-                    })}
+      {/* Messages Area - Added bottom padding for input area */}
+      <div className="flex-1 overflow-hidden">
+        <ScrollArea className="h-full px-4">
+          <div className="py-4 space-y-4 pb-24">
+            {messages.length === 0 ? (
+              <div className="flex flex-col items-center justify-center h-full text-center space-y-4 min-h-[400px]">
+                <div className="w-16 h-16 rounded-full bg-gradient-primary/10 flex items-center justify-center">
+                  <span className="text-2xl">💭</span>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-foreground mb-2">AI Chat शुरू करें</h3>
+                  <p className="text-muted-foreground text-sm max-w-sm">
+                    अपने विचार, भावनाएं या कोई भी बात साझा करें। मैं यहां सुनने के लिए हूं।
                   </p>
                 </div>
               </div>
-            ))
-          )}
-          
-          {isLoading && (
-            <div className="flex justify-start animate-slide-in">
-              <div className="bg-surface border border-border rounded-2xl px-4 py-3 mr-4">
-                <div className="flex items-center space-x-2">
-                  <div className="flex space-x-1">
-                    <div className="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                    <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+            ) : (
+              messages.map((message) => (
+                <div
+                  key={message.id}
+                  className={`flex ${message.isUser ? 'justify-end' : 'justify-start'} animate-slide-in`}
+                >
+                  <div
+                    className={`max-w-[85%] rounded-2xl px-4 py-3 shadow-sm ${
+                      message.isUser
+                        ? 'bg-gradient-primary text-white ml-4'
+                        : message.isError
+                        ? 'bg-destructive/10 border border-destructive/20 text-destructive mr-4'
+                        : 'bg-surface border border-border mr-4'
+                    }`}
+                  >
+                    <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.text}</p>
+                    <p className={`text-xs mt-2 ${
+                      message.isUser 
+                        ? 'text-white/70' 
+                        : message.isError 
+                        ? 'text-destructive/70'
+                        : 'text-muted-foreground'
+                    }`}>
+                      {message.timestamp.toLocaleTimeString('hi-IN', { 
+                        hour: '2-digit', 
+                        minute: '2-digit' 
+                      })}
+                    </p>
                   </div>
-                  <span className="text-xs text-muted-foreground">AI सोच रहा है...</span>
+                </div>
+              ))
+            )}
+            
+            {isLoading && (
+              <div className="flex justify-start animate-slide-in">
+                <div className="bg-surface border border-border rounded-2xl px-4 py-3 mr-4">
+                  <div className="flex items-center space-x-2">
+                    <div className="flex space-x-1">
+                      <div className="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                      <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                    </div>
+                    <span className="text-xs text-muted-foreground">AI सोच रहा है...</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
-          <div ref={messagesEndRef} />
-        </div>
-      </ScrollArea>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+        </ScrollArea>
+      </div>
 
-      {/* Input Area */}
-      <div className="border-t border-border bg-surface/80 backdrop-blur-sm p-4 shrink-0">
-        <div className="flex items-center space-x-3">
-          <Button variant="ghost" size="sm" className="rounded-full p-2 hover:bg-accent/10">
-            <Image className="w-4 h-4 text-muted-foreground" />
-          </Button>
-          
-          <div className="flex-1 relative">
-            <Input
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="अपना संदेश लिखें..."
-              className="rounded-full pr-12 border-border focus:border-primary transition-colors"
-              disabled={isLoading}
-              maxLength={500}
-            />
-            <Button
-              onClick={handleSendMessage}
-              disabled={!inputText.trim() || isLoading}
-              className="absolute right-1 top-1/2 -translate-y-1/2 rounded-full w-8 h-8 p-0 bg-gradient-primary hover:opacity-90 disabled:opacity-50 transition-all"
-            >
-              <Send className="w-4 h-4" />
+      {/* Fixed Input Area - Positioned absolutely at bottom */}
+      <div className="fixed bottom-20 left-0 right-0 max-w-md mx-auto px-4 z-30">
+        <div className="border border-border bg-surface/95 backdrop-blur-sm rounded-full shadow-lg">
+          <div className="flex items-center space-x-3 p-3">
+            <Button variant="ghost" size="sm" className="rounded-full p-2 hover:bg-accent/10 shrink-0">
+              <Image className="w-4 h-4 text-muted-foreground" />
+            </Button>
+            
+            <div className="flex-1 relative">
+              <Input
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="अपना संदेश लिखें..."
+                className="rounded-full pr-12 border-0 bg-transparent focus:border-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                disabled={isLoading}
+                maxLength={500}
+              />
+              <Button
+                onClick={handleSendMessage}
+                disabled={!inputText.trim() || isLoading}
+                className="absolute right-1 top-1/2 -translate-y-1/2 rounded-full w-8 h-8 p-0 bg-gradient-primary hover:opacity-90 disabled:opacity-50 transition-all"
+              >
+                <Send className="w-4 h-4" />
+              </Button>
+            </div>
+            
+            <Button variant="ghost" size="sm" className="rounded-full p-2 hover:bg-accent/10 shrink-0">
+              <Mic className="w-4 h-4 text-muted-foreground" />
             </Button>
           </div>
           
-          <Button variant="ghost" size="sm" className="rounded-full p-2 hover:bg-accent/10">
-            <Mic className="w-4 h-4 text-muted-foreground" />
-          </Button>
+          {inputText.length > 0 && (
+            <div className="px-4 pb-2 text-xs text-muted-foreground text-right">
+              {inputText.length}/500
+            </div>
+          )}
         </div>
-        
-        {inputText.length > 0 && (
-          <div className="mt-2 text-xs text-muted-foreground text-right">
-            {inputText.length}/500
-          </div>
-        )}
       </div>
     </div>
   );
