@@ -1,3 +1,4 @@
+
 import { useState, useRef, useEffect } from 'react';
 import { Send, Mic, Image, Trash2, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -193,12 +194,12 @@ const ChatInterface = () => {
         </div>
       </div>
 
-      {/* Messages Area - Added bottom padding for input area */}
+      {/* Messages Area - Proper height calculation to avoid overlap */}
       <div className="flex-1 overflow-hidden">
         <ScrollArea className="h-full px-4">
-          <div className="py-4 space-y-4 pb-24">
+          <div className="py-4 space-y-4 pb-28">
             {messages.length === 0 ? (
-              <div className="flex flex-col items-center justify-center h-full text-center space-y-4 min-h-[400px]">
+              <div className="flex flex-col items-center justify-center h-full text-center space-y-4 min-h-[300px]">
                 <div className="w-16 h-16 rounded-full bg-gradient-primary/10 flex items-center justify-center">
                   <span className="text-2xl">💭</span>
                 </div>
@@ -261,44 +262,42 @@ const ChatInterface = () => {
         </ScrollArea>
       </div>
 
-      {/* Fixed Input Area - Positioned absolutely at bottom */}
-      <div className="fixed bottom-20 left-0 right-0 max-w-md mx-auto px-4 z-30">
-        <div className="border border-border bg-surface/95 backdrop-blur-sm rounded-full shadow-lg">
-          <div className="flex items-center space-x-3 p-3">
-            <Button variant="ghost" size="sm" className="rounded-full p-2 hover:bg-accent/10 shrink-0">
-              <Image className="w-4 h-4 text-muted-foreground" />
-            </Button>
-            
-            <div className="flex-1 relative">
-              <Input
-                value={inputText}
-                onChange={(e) => setInputText(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="अपना संदेश लिखें..."
-                className="rounded-full pr-12 border-0 bg-transparent focus:border-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                disabled={isLoading}
-                maxLength={500}
-              />
-              <Button
-                onClick={handleSendMessage}
-                disabled={!inputText.trim() || isLoading}
-                className="absolute right-1 top-1/2 -translate-y-1/2 rounded-full w-8 h-8 p-0 bg-gradient-primary hover:opacity-90 disabled:opacity-50 transition-all"
-              >
-                <Send className="w-4 h-4" />
-              </Button>
-            </div>
-            
-            <Button variant="ghost" size="sm" className="rounded-full p-2 hover:bg-accent/10 shrink-0">
-              <Mic className="w-4 h-4 text-muted-foreground" />
+      {/* Input Area - Fixed at bottom with proper spacing */}
+      <div className="shrink-0 p-4 bg-surface/95 backdrop-blur-sm border-t border-border">
+        <div className="flex items-center space-x-3">
+          <Button variant="ghost" size="sm" className="rounded-full p-2 hover:bg-accent/10 shrink-0">
+            <Image className="w-4 h-4 text-muted-foreground" />
+          </Button>
+          
+          <div className="flex-1 relative">
+            <Input
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="अपना संदेश लिखें..."
+              className="rounded-full pr-12 border border-border focus:border-primary"
+              disabled={isLoading}
+              maxLength={500}
+            />
+            <Button
+              onClick={handleSendMessage}
+              disabled={!inputText.trim() || isLoading}
+              className="absolute right-1 top-1/2 -translate-y-1/2 rounded-full w-8 h-8 p-0 bg-gradient-primary hover:opacity-90 disabled:opacity-50 transition-all"
+            >
+              <Send className="w-4 h-4" />
             </Button>
           </div>
           
-          {inputText.length > 0 && (
-            <div className="px-4 pb-2 text-xs text-muted-foreground text-right">
-              {inputText.length}/500
-            </div>
-          )}
+          <Button variant="ghost" size="sm" className="rounded-full p-2 hover:bg-accent/10 shrink-0">
+            <Mic className="w-4 h-4 text-muted-foreground" />
+          </Button>
         </div>
+        
+        {inputText.length > 0 && (
+          <div className="mt-2 text-xs text-muted-foreground text-right">
+            {inputText.length}/500
+          </div>
+        )}
       </div>
     </div>
   );

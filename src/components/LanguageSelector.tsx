@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -45,7 +45,15 @@ const LanguageSelector = ({ onLanguageChange }: LanguageSelectorProps) => {
   const handleLanguageChange = (languageCode: string) => {
     setSelectedLanguage(languageCode);
     localStorage.setItem('selectedLanguage', languageCode);
+    
+    // Trigger app-wide language change
+    window.dispatchEvent(new CustomEvent('languageChange', { detail: languageCode }));
     onLanguageChange?.(languageCode);
+    
+    // Force reload to apply language changes throughout the app
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   };
 
   const currentLanguage = languages.find(lang => lang.code === selectedLanguage);
