@@ -2,7 +2,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'app.lovable.fc31d0ad638c49a5b87ccb67b53f98e1',
+  appId: 'com.heartlogai.com',
   appName: 'HeartLog AI',
   webDir: 'dist',
   server: {

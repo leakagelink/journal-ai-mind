@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -76,7 +75,15 @@
     </script>
     
     <style>
-      /* Instant loading splash screen to prevent white flash */
+      /* Critical inline styles to prevent any white flash */
+      html, body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #db2777 100%);
+        overflow: hidden;
+      }
+      
+      /* Instant loading splash screen - shown immediately */
       #instant-splash {
         position: fixed;
         inset: 0;
@@ -119,6 +126,7 @@
         font-weight: bold;
         margin-bottom: 12px;
         letter-spacing: 0.05em;
+        font-family: system-ui, -apple-system, sans-serif;
       }
       
       .instant-subtitle {
@@ -126,6 +134,7 @@
         font-size: 1.125rem;
         font-weight: 500;
         margin-bottom: 32px;
+        font-family: system-ui, -apple-system, sans-serif;
       }
       
       .instant-dots {
@@ -154,18 +163,27 @@
         0%, 100% { opacity: 1; transform: scale(1); }
         50% { opacity: 0.5; transform: scale(0.8); }
       }
+      
+      /* Hide root until React loads */
+      #root {
+        display: none;
+      }
+      
+      #root.loaded {
+        display: block;
+      }
     </style>
   </head>
 
   <body>
     <noscript>
-      <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
+      <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif; background: white;">
         <h1>JavaScript Required</h1>
         <p>HeartLog AI requires JavaScript to function properly. Please enable JavaScript in your browser settings.</p>
       </div>
     </noscript>
     
-    <!-- Instant splash screen to prevent white flash -->
+    <!-- Instant splash screen to prevent white flash - shown immediately -->
     <div id="instant-splash">
       <div class="instant-logo">
         <div class="instant-logo-container">
@@ -184,17 +202,26 @@
     <div id="root"></div>
     
     <script>
-      // Hide instant splash when React is ready
+      // Show root when React is ready and hide instant splash
       document.addEventListener('DOMContentLoaded', function() {
+        const root = document.getElementById('root');
+        const instantSplash = document.getElementById('instant-splash');
+        
+        // Show root immediately when DOM is ready
+        if (root) {
+          root.classList.add('loaded');
+          document.body.style.overflow = 'auto';
+        }
+        
+        // Hide instant splash after a short delay to allow React to mount
         setTimeout(function() {
-          const instantSplash = document.getElementById('instant-splash');
           if (instantSplash) {
             instantSplash.classList.add('fade-out');
             setTimeout(function() {
               instantSplash.style.display = 'none';
             }, 300);
           }
-        }, 800); // Give React time to mount
+        }, 1000);
       });
     </script>
     

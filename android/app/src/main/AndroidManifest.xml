@@ -2,7 +2,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="app.lovable.fc31d0ad638c49a5b87ccb67b53f98e1">
+    package="com.heartlogai.com">
 
     <!-- Internet permission for ads and API calls -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -75,7 +75,7 @@
         <!-- File provider for sharing/exporting data -->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
+            android:authorities="com.heartlogai.com.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
