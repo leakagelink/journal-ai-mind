@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Heart } from 'lucide-react';
 
 interface SplashScreenProps {
   onComplete: () => void;
@@ -8,54 +8,108 @@ interface SplashScreenProps {
 
 const SplashScreen = ({ onComplete }: SplashScreenProps) => {
   const [isVisible, setIsVisible] = useState(true);
+  const [animationPhase, setAnimationPhase] = useState(0);
 
   useEffect(() => {
+    // Animation phases
+    const phase1 = setTimeout(() => setAnimationPhase(1), 500);
+    const phase2 = setTimeout(() => setAnimationPhase(2), 1000);
+    const phase3 = setTimeout(() => setAnimationPhase(3), 1500);
+    
     const timer = setTimeout(() => {
       setIsVisible(false);
       setTimeout(onComplete, 500);
-    }, 2500);
+    }, 3000);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(phase1);
+      clearTimeout(phase2);
+      clearTimeout(phase3);
+      clearTimeout(timer);
+    };
   }, [onComplete]);
 
   if (!isVisible) {
     return (
-      <div className="fixed inset-0 bg-gradient-primary animate-fade-in opacity-0 pointer-events-none transition-opacity duration-500" />
+      <div className="fixed inset-0 bg-gradient-primary animate-fade-out opacity-0 pointer-events-none transition-opacity duration-500" />
     );
   }
 
   return (
-    <div className="fixed inset-0 bg-gradient-primary flex items-center justify-center z-50">
-      <div className="text-center animate-slide-in">
-        <div className="relative mb-8">
+    <div className="fixed inset-0 bg-gradient-to-br from-primary via-purple-600 to-pink-600 flex items-center justify-center z-50 overflow-hidden">
+      {/* Animated background particles */}
+      <div className="absolute inset-0">
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-2 h-2 bg-white/20 rounded-full animate-float"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
+              animationDuration: `${3 + Math.random() * 2}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="text-center relative z-10">
+        {/* Logo container with modern effects */}
+        <div className={`relative mb-8 transition-all duration-1000 ${
+          animationPhase >= 1 ? 'scale-100 opacity-100' : 'scale-75 opacity-0'
+        }`}>
+          {/* Glowing background effect */}
           <div className="absolute inset-0 animate-pulse-soft">
-            <img 
-              src="/lovable-uploads/de606a59-5688-41ce-875d-87d92367d4c3.png" 
-              alt="HeartLog AI" 
-              className="w-20 h-20 mx-auto opacity-20"
-            />
+            <div className="w-24 h-24 mx-auto rounded-full bg-white/10 backdrop-blur-sm border border-white/20" />
           </div>
-          <div className="relative animate-float">
-            <img 
-              src="/lovable-uploads/de606a59-5688-41ce-875d-87d92367d4c3.png" 
-              alt="HeartLog AI" 
-              className="w-20 h-20 mx-auto"
-            />
+          
+          {/* Main logo */}
+          <div className={`relative transition-all duration-1000 ${
+            animationPhase >= 2 ? 'animate-float' : ''
+          }`}>
+            <div className="w-24 h-24 mx-auto rounded-full bg-white/20 backdrop-blur-md border-2 border-white/30 flex items-center justify-center shadow-2xl">
+              <img 
+                src="/lovable-uploads/de606a59-5688-41ce-875d-87d92367d4c3.png" 
+                alt="HeartLog AI" 
+                className="w-16 h-16 object-contain"
+              />
+            </div>
+            
+            {/* Sparkle effects */}
             <Sparkles className="w-6 h-6 text-yellow-300 absolute -top-2 -right-2 animate-pulse" />
+            <Heart className="w-4 h-4 text-pink-300 absolute -bottom-1 -left-1 animate-pulse" style={{ animationDelay: '0.5s' }} />
           </div>
         </div>
         
-        <h1 className="text-3xl font-bold text-white mb-2 font-display">
-          HeartLog AI
-        </h1>
-        <p className="text-white/80 text-lg mb-8">
-          Your Personal AI Companion
-        </p>
+        {/* App name with typing effect */}
+        <div className={`transition-all duration-1000 delay-500 ${
+          animationPhase >= 2 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+        }`}>
+          <h1 className="text-4xl font-bold text-white mb-3 font-display tracking-wide">
+            HeartLog AI
+          </h1>
+          <div className="flex items-center justify-center space-x-2 mb-2">
+            <Heart className="w-4 h-4 text-pink-300" />
+            <p className="text-white/90 text-lg font-medium">
+              Your Personal AI Companion
+            </p>
+            <Heart className="w-4 h-4 text-pink-300" />
+          </div>
+          <p className="text-white/70 text-sm mb-8">
+            Journal • Chat • Mood Tracking
+          </p>
+        </div>
         
-        <div className="flex justify-center space-x-2">
-          <div className="w-2 h-2 bg-white/60 rounded-full animate-pulse"></div>
-          <div className="w-2 h-2 bg-white/60 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-          <div className="w-2 h-2 bg-white/60 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+        {/* Loading indicator */}
+        <div className={`transition-all duration-1000 delay-1000 ${
+          animationPhase >= 3 ? 'opacity-100' : 'opacity-0'
+        }`}>
+          <div className="flex justify-center space-x-3 mb-4">
+            <div className="w-3 h-3 bg-white/70 rounded-full animate-pulse"></div>
+            <div className="w-3 h-3 bg-white/70 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+            <div className="w-3 h-3 bg-white/70 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+          </div>
+          <p className="text-white/60 text-xs">Loading your companion...</p>
         </div>
       </div>
     </div>

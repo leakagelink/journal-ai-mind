@@ -1,5 +1,5 @@
 
-import { User, Bell, Shield, Info, FileText, Trash2, Download } from 'lucide-react';
+import { User, Shield, Info, FileText, Trash2, Download, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
@@ -21,6 +21,8 @@ const SettingsView = ({ onNavigate }: SettingsViewProps) => {
     const chatMessages = localStorage.getItem('chatMessages') || '[]';
     
     const data = {
+      application: 'HeartLog AI',
+      version: '1.0',
       journalEntries: JSON.parse(journalEntries),
       chatMessages: JSON.parse(chatMessages),
       exportDate: new Date().toISOString()
@@ -30,7 +32,7 @@ const SettingsView = ({ onNavigate }: SettingsViewProps) => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `ai-journal-backup-${new Date().toISOString().split('T')[0]}.json`;
+    a.download = `heartlog-ai-backup-${new Date().toISOString().split('T')[0]}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -39,27 +41,38 @@ const SettingsView = ({ onNavigate }: SettingsViewProps) => {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="p-4 border-b border-border">
-        <h2 className="text-xl font-bold text-gradient">Settings</h2>
+      <div className="p-4 border-b border-border bg-gradient-to-r from-primary/10 to-purple-500/10">
+        <div className="flex items-center space-x-2 mb-2">
+          <img 
+            src="/lovable-uploads/de606a59-5688-41ce-875d-87d92367d4c3.png" 
+            alt="HeartLog AI" 
+            className="w-6 h-6 rounded-full"
+          />
+          <h2 className="text-xl font-bold text-gradient">HeartLog AI Settings</h2>
+        </div>
+        <p className="text-sm text-muted-foreground">Manage your personal AI companion</p>
       </div>
       
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {/* Profile Section */}
-        <Card className="p-4 border border-border">
+        <Card className="p-4 border border-border bg-gradient-to-br from-primary/5 to-purple-500/5">
           <div className="flex items-center space-x-3 mb-4">
-            <div className="bg-gradient-primary p-3 rounded-full">
-              <User className="w-6 h-6 text-white" />
+            <div className="bg-gradient-primary p-3 rounded-full shadow-lg">
+              <Heart className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h3 className="font-semibold">Personal Journal</h3>
-              <p className="text-sm text-muted-foreground">Your private space</p>
+              <h3 className="font-semibold">Personal Wellness Journal</h3>
+              <p className="text-sm text-muted-foreground">Your private emotional companion</p>
             </div>
           </div>
         </Card>
 
         {/* App Information */}
         <div className="space-y-3">
-          <h3 className="font-semibold text-lg">App Information</h3>
+          <h3 className="font-semibold text-lg flex items-center">
+            <Info className="w-5 h-5 mr-2 text-primary" />
+            App Information
+          </h3>
           
           <Card className="border border-border">
             <button 
@@ -68,7 +81,7 @@ const SettingsView = ({ onNavigate }: SettingsViewProps) => {
             >
               <div className="flex items-center space-x-3">
                 <Info className="w-5 h-5 text-primary" />
-                <span>About AI Journal</span>
+                <span>About HeartLog AI</span>
               </div>
             </button>
           </Card>
@@ -100,7 +113,10 @@ const SettingsView = ({ onNavigate }: SettingsViewProps) => {
 
         {/* Data Management */}
         <div className="space-y-3">
-          <h3 className="font-semibold text-lg">Data Management</h3>
+          <h3 className="font-semibold text-lg flex items-center">
+            <Download className="w-5 h-5 mr-2 text-primary" />
+            Data Management
+          </h3>
           
           <Card className="p-4 border border-border">
             <Button 
@@ -111,8 +127,8 @@ const SettingsView = ({ onNavigate }: SettingsViewProps) => {
               <div className="flex items-center space-x-3">
                 <Download className="w-5 h-5 text-primary" />
                 <div className="text-left">
-                  <div>Export Data</div>
-                  <div className="text-xs text-muted-foreground">Download your journal and chat data</div>
+                  <div>Export Your Data</div>
+                  <div className="text-xs text-muted-foreground">Download your HeartLog AI journal and chat data</div>
                 </div>
               </div>
             </Button>
@@ -136,12 +152,22 @@ const SettingsView = ({ onNavigate }: SettingsViewProps) => {
         </div>
 
         {/* App Version */}
-        <Card className="p-4 border border-border text-center">
-          <p className="text-sm text-muted-foreground">
-            AI Journal v1.0
+        <Card className="p-4 border border-border text-center bg-gradient-to-br from-primary/5 to-purple-500/5">
+          <div className="flex items-center justify-center space-x-2 mb-2">
+            <img 
+              src="/lovable-uploads/de606a59-5688-41ce-875d-87d92367d4c3.png" 
+              alt="HeartLog AI" 
+              className="w-5 h-5 rounded-full"
+            />
+            <p className="text-sm font-semibold text-gradient">
+              HeartLog AI v1.0
+            </p>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Your data stays private and secure on your device
           </p>
           <p className="text-xs text-muted-foreground mt-1">
-            Your data stays on your device
+            Designed with ❤️ for your emotional well-being
           </p>
         </Card>
       </div>
