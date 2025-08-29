@@ -1,8 +1,10 @@
 
-import { useState } from 'react';
-import { Calendar, TrendingUp, Heart } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Calendar, TrendingUp, Heart, Save } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { useToast } from '@/components/ui/use-toast';
 
 interface MoodEntry {
   date: string;
@@ -13,11 +15,10 @@ interface MoodEntry {
 
 const MoodTracker = () => {
   const [selectedMood, setSelectedMood] = useState<string>('');
-  const [moodEntries] = useState<MoodEntry[]>([
-    { date: '2024-01-15', mood: 'Happy', emoji: '😊', note: 'Great day at work!' },
-    { date: '2024-01-14', mood: 'Calm', emoji: '😌', note: 'Peaceful evening' },
-    { date: '2024-01-13', mood: 'Excited', emoji: '🤩', note: 'New project started' },
-  ]);
+  const [selectedEmoji, setSelectedEmoji] = useState<string>('');
+  const [note, setNote] = useState<string>('');
+  const [moodEntries, setMoodEntries] = useState<MoodEntry[]>([]);
+  const { toast } = useToast();
 
   const moods = [
     { name: 'Happy', emoji: '😊', color: 'bg-yellow-100 border-yellow-300' },
@@ -27,6 +28,72 @@ const MoodTracker = () => {
     { name: 'Anxious', emoji: '😰', color: 'bg-red-100 border-red-300' },
     { name: 'Grateful', emoji: '🙏', color: 'bg-purple-100 border-purple-300' },
   ];
+
+  useEffect(() => {
+    const savedMoods = localStorage.getItem('moodEntries');
+    if (savedMoods) {
+      setMoodEntries(JSON.parse(savedMoods));
+    } else {
+      // Default entries
+      const defaultEntries = [
+        { date: '2024-01-15', mood: 'Happy', emoji: '😊', note: 'Great day at work!' },
+        { date: '2024-01-14', mood: 'Calm', emoji: '😌', note: 'Peaceful evening' },
+        { date: '2024-01-13', mood: 'Excited', emoji: '🤩', note: 'New project started' },
+      ];
+      setMoodEntries(defaultEntries);
+    }
+  }, []);
+
+  const handleMoodSelect = (mood: { name: string; emoji: string }) => {
+    setSelectedMood(mood.name);
+    setSelectedEmoji(mood.emoji);
+  };
+
+  const saveMood = () => {
+    if (!selectedMood) {
+      toast({
+        title: "Error",
+        description: "कृपया पहले mood select करें।",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const today = new Date().toISOString().split('T')[0];
+    
+    // Check if mood already exists for today
+    const existingIndex = moodEntries.findIndex(entry => entry.date === today);
+    
+    const newEntry: MoodEntry = {
+      date: today,
+      mood: selectedMood,
+      emoji: selectedEmoji,
+      note: note.trim() || `Feeling ${selectedMood.toLowerCase()} today!`,
+    };
+
+    let updatedEntries;
+    if (existingIndex >= 0) {
+      // Update existing entry
+      updatedEntries = [...moodEntries];
+      updatedEntries[existingIndex] = newEntry;
+    } else {
+      // Add new entry
+      updatedEntries = [newEntry, ...moodEntries];
+    }
+
+    setMoodEntries(updatedEntries);
+    localStorage.setItem('moodEntries', JSON.stringify(updatedEntries));
+    
+    // Reset form
+    setSelectedMood('');
+    setSelectedEmoji('');
+    setNote('');
+
+    toast({
+      title: "Success",
+      description: "आपका mood save हो गया है! 🎉",
+    });
+  };
 
   return (
     <div className="flex flex-col h-full">
@@ -42,11 +109,11 @@ const MoodTracker = () => {
           <Heart className="w-4 h-4 mr-2 text-primary" />
           Today's Mood
         </h3>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-3 gap-3 mb-4">
           {moods.map((mood) => (
             <button
               key={mood.name}
-              onClick={() => setSelectedMood(mood.name)}
+              onClick={() => handleMoodSelect(mood)}
               className={`p-3 rounded-xl border-2 transition-all duration-200 ${
                 selectedMood === mood.name 
                   ? 'border-primary bg-primary/10 scale-105' 
@@ -58,6 +125,20 @@ const MoodTracker = () => {
             </button>
           ))}
         </div>
+
+        {/* Note Input */}
+        {selectedMood && (
+          <div className="space-y-3">
+            <label className="text-sm font-medium">Add a note (optional)</label>
+            <Input
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              placeholder="How was your day?"
+              className="border-border focus:border-primary"
+              maxLength={200}
+            />
+          </div>
+        )}
       </div>
 
       {/* Recent Moods */}
@@ -74,7 +155,9 @@ const MoodTracker = () => {
                   <span className="text-2xl">{entry.emoji}</span>
                   <div>
                     <p className="font-medium">{entry.mood}</p>
-                    <p className="text-xs text-muted-foreground">{entry.date}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {new Date(entry.date).toLocaleDateString('hi-IN')}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -89,7 +172,8 @@ const MoodTracker = () => {
       {/* Save Button */}
       {selectedMood && (
         <div className="p-4 border-t border-border">
-          <Button className="w-full bg-gradient-primary hover:opacity-90">
+          <Button onClick={saveMood} className="w-full bg-gradient-primary hover:opacity-90">
+            <Save className="w-4 h-4 mr-2" />
             Save Today's Mood
           </Button>
         </div>

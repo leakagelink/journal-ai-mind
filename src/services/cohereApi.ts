@@ -14,9 +14,9 @@ export const generateCohereResponse = async (prompt: string): Promise<string> =>
   try {
     const requestBody = {
       model: 'command',
-      prompt: `आप एक सहायक AI जर्नल साथी हैं। कृपया इस संदेश का सहयोगी और विचारशील तरीके से जवाब दें: "${prompt}"`,
-      max_tokens: 200,
-      temperature: 0.7,
+      prompt: `You are a helpful AI journal companion. Please respond in the same language as the user's question. If the user writes in Hindi, respond in Hindi. If in English, respond in English. If in Marathi, respond in Marathi. Be supportive and thoughtful in your response to: "${prompt}"`,
+      max_tokens: 300,
+      temperature: 0.8,
     };
     
     console.log('Cohere API: Request body:', requestBody);
@@ -26,6 +26,7 @@ export const generateCohereResponse = async (prompt: string): Promise<string> =>
       headers: {
         'Authorization': `Bearer ${COHERE_API_KEY}`,
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
       body: JSON.stringify(requestBody),
     });
