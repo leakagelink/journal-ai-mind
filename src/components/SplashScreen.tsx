@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import { MessageCircle, Sparkles, BookOpen } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 
 interface SplashScreenProps {
   onComplete: () => void;
@@ -29,16 +29,24 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
       <div className="text-center animate-slide-in">
         <div className="relative mb-8">
           <div className="absolute inset-0 animate-pulse-soft">
-            <MessageCircle className="w-20 h-20 text-white/20 mx-auto" />
+            <img 
+              src="/lovable-uploads/de606a59-5688-41ce-875d-87d92367d4c3.png" 
+              alt="HeartLog AI" 
+              className="w-20 h-20 mx-auto opacity-20"
+            />
           </div>
           <div className="relative animate-float">
-            <MessageCircle className="w-20 h-20 text-white mx-auto" />
+            <img 
+              src="/lovable-uploads/de606a59-5688-41ce-875d-87d92367d4c3.png" 
+              alt="HeartLog AI" 
+              className="w-20 h-20 mx-auto"
+            />
             <Sparkles className="w-6 h-6 text-yellow-300 absolute -top-2 -right-2 animate-pulse" />
           </div>
         </div>
         
         <h1 className="text-3xl font-bold text-white mb-2 font-display">
-          AI Chat Journal
+          HeartLog AI
         </h1>
         <p className="text-white/80 text-lg mb-8">
           Your Personal AI Companion

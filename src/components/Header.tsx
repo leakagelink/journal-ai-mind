@@ -29,9 +29,16 @@ const Header = ({ onNavigate }: HeaderProps) => {
             >
               <Menu className="w-5 h-5 text-white" />
             </Button>
-            <div>
-              <h1 className="text-lg font-bold text-gradient font-display">AI Journal</h1>
-              <p className="text-xs text-muted-foreground">Personal Companion</p>
+            <div className="flex items-center space-x-2">
+              <img 
+                src="/lovable-uploads/de606a59-5688-41ce-875d-87d92367d4c3.png" 
+                alt="HeartLog AI" 
+                className="w-8 h-8 rounded-full"
+              />
+              <div>
+                <h1 className="text-lg font-bold text-gradient font-display">HeartLog AI</h1>
+                <p className="text-xs text-muted-foreground">Personal Companion</p>
+              </div>
             </div>
           </div>
           
