@@ -1,21 +1,42 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { X, Save } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 
+interface JournalEntry {
+  id: string;
+  date: Date;
+  title: string;
+  content: string;
+  mood: string;
+}
+
 interface JournalEntryFormProps {
+  entry?: JournalEntry | null;
   onSave: (title: string, content: string, mood: string) => void;
   onClose: () => void;
 }
 
-const JournalEntryForm = ({ onSave, onClose }: JournalEntryFormProps) => {
+const JournalEntryForm = ({ entry, onSave, onClose }: JournalEntryFormProps) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [mood, setMood] = useState('😊');
+  const [mood, setMood] = useState('💕');
 
-  const moods = ['😊', '😢', '😡', '😴', '🤔', '😍', '😰', '🤗'];
+  const moods = ['💕', '😊', '😢', '😡', '😴', '🤔', '😍', '😰', '🤗', '🎉', '😌', '🥰'];
+
+  useEffect(() => {
+    if (entry) {
+      setTitle(entry.title);
+      setContent(entry.content);
+      setMood(entry.mood);
+    } else {
+      setTitle('');
+      setContent('');
+      setMood('💕');
+    }
+  }, [entry]);
 
   const handleSave = () => {
     if (title.trim() && content.trim()) {
@@ -28,7 +49,9 @@ const JournalEntryForm = ({ onSave, onClose }: JournalEntryFormProps) => {
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <Card className="w-full max-w-md bg-surface border border-border p-6 animate-slide-in">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-bold text-gradient">New Journal Entry</h3>
+          <h3 className="text-lg font-bold text-gradient">
+            {entry ? 'Edit Journal Entry' : 'New Journal Entry'}
+          </h3>
           <Button variant="ghost" size="sm" onClick={onClose} className="rounded-full p-2">
             <X className="w-4 h-4" />
           </Button>
@@ -68,7 +91,8 @@ const JournalEntryForm = ({ onSave, onClose }: JournalEntryFormProps) => {
               value={content}
               onChange={(e) => setContent(e.target.value)}
               placeholder="Write about your thoughts, feelings, or experiences..."
-              className="w-full h-32 p-3 border border-border rounded-lg resize-none focus:border-primary focus:outline-none"
+              className="w-full h-32 p-3 border border-border rounded-lg resize-none focus:border-primary focus:outline-none bg-surface"
+              rows={4}
             />
           </div>
           
@@ -78,7 +102,7 @@ const JournalEntryForm = ({ onSave, onClose }: JournalEntryFormProps) => {
             </Button>
             <Button onClick={handleSave} className="flex-1 bg-gradient-primary">
               <Save className="w-4 h-4 mr-2" />
-              Save Entry
+              {entry ? 'Update Entry' : 'Save Entry'}
             </Button>
           </div>
         </div>
