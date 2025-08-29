@@ -1,8 +1,9 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Calendar, Search, Filter, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import JournalEntryForm from './JournalEntryForm';
 
 interface JournalEntry {
   id: string;
@@ -13,22 +14,48 @@ interface JournalEntry {
 }
 
 const JournalView = () => {
-  const [entries, setEntries] = useState<JournalEntry[]>([
-    {
-      id: '1',
+  const [entries, setEntries] = useState<JournalEntry[]>([]);
+  const [showForm, setShowForm] = useState(false);
+
+  useEffect(() => {
+    const savedEntries = localStorage.getItem('journalEntries');
+    if (savedEntries) {
+      const parsed = JSON.parse(savedEntries);
+      setEntries(parsed.map((entry: any) => ({
+        ...entry,
+        date: new Date(entry.date)
+      })));
+    } else {
+      // Default entries for first time users
+      const defaultEntries = [
+        {
+          id: '1',
+          date: new Date(),
+          title: 'Welcome to your Journal',
+          content: 'Start writing your thoughts and feelings here. Your data stays private on your device.',
+          mood: '😊',
+        }
+      ];
+      setEntries(defaultEntries);
+    }
+  }, []);
+
+  const saveEntries = (newEntries: JournalEntry[]) => {
+    setEntries(newEntries);
+    localStorage.setItem('journalEntries', JSON.stringify(newEntries));
+  };
+
+  const handleSaveEntry = (title: string, content: string, mood: string) => {
+    const newEntry: JournalEntry = {
+      id: Date.now().toString(),
       date: new Date(),
-      title: 'Morning Reflections',
-      content: 'Today I woke up feeling grateful for the opportunities ahead...',
-      mood: '😊',
-    },
-    {
-      id: '2',
-      date: new Date(Date.now() - 86400000),
-      title: 'Evening Thoughts',
-      content: 'Reflecting on the day, I realize how much I\'ve grown...',
-      mood: '🤔',
-    },
-  ]);
+      title,
+      content,
+      mood,
+    };
+    const updatedEntries = [newEntry, ...entries];
+    saveEntries(updatedEntries);
+  };
 
   return (
     <div className="flex flex-col h-full">
@@ -80,9 +107,20 @@ const JournalView = () => {
       </div>
 
       {/* Floating Add Button */}
-      <Button className="fixed bottom-20 right-4 rounded-full w-14 h-14 bg-gradient-primary shadow-lg hover:opacity-90 z-30">
+      <Button 
+        onClick={() => setShowForm(true)}
+        className="fixed bottom-20 right-4 rounded-full w-14 h-14 bg-gradient-primary shadow-lg hover:opacity-90 z-30"
+      >
         <Plus className="w-6 h-6" />
       </Button>
+
+      {/* Journal Entry Form */}
+      {showForm && (
+        <JournalEntryForm
+          onSave={handleSaveEntry}
+          onClose={() => setShowForm(false)}
+        />
+      )}
     </div>
   );
 };

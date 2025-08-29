@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Send, Mic, Image } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { generateCohereResponse } from '@/services/cohereApi';
 
 interface Message {
   id: string;
@@ -12,16 +13,31 @@ interface Message {
 }
 
 const ChatInterface = () => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      text: 'Hello! I\'m your AI journal companion. How are you feeling today?',
-      isUser: false,
-      timestamp: new Date(),
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Load messages from localStorage
+    const savedMessages = localStorage.getItem('chatMessages');
+    if (savedMessages) {
+      const parsed = JSON.parse(savedMessages);
+      setMessages(parsed.map((msg: any) => ({
+        ...msg,
+        timestamp: new Date(msg.timestamp)
+      })));
+    } else {
+      // Default welcome message
+      const welcomeMessage: Message = {
+        id: '1',
+        text: 'Hello! I\'m your AI journal companion. How are you feeling today? Share your thoughts with me.',
+        isUser: false,
+        timestamp: new Date(),
+      };
+      setMessages([welcomeMessage]);
+    }
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -31,19 +47,13 @@ const ChatInterface = () => {
     scrollToBottom();
   }, [messages]);
 
-  const generateAIResponse = (userMessage: string): string => {
-    const responses = [
-      "That's really interesting! Tell me more about how that made you feel.",
-      "I understand. It sounds like you're going through a lot. How can I help?",
-      "Thank you for sharing that with me. What thoughts come to mind about this?",
-      "That's a meaningful reflection. How do you think this relates to your goals?",
-      "I appreciate your openness. What would you like to explore further?",
-    ];
-    return responses[Math.floor(Math.random() * responses.length)];
+  const saveMessages = (newMessages: Message[]) => {
+    setMessages(newMessages);
+    localStorage.setItem('chatMessages', JSON.stringify(newMessages));
   };
 
-  const handleSendMessage = () => {
-    if (!inputText.trim()) return;
+  const handleSendMessage = async () => {
+    if (!inputText.trim() || isLoading) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -52,19 +62,34 @@ const ChatInterface = () => {
       timestamp: new Date(),
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    const updatedMessages = [...messages, userMessage];
+    saveMessages(updatedMessages);
     setInputText('');
+    setIsLoading(true);
 
-    // Simulate AI response
-    setTimeout(() => {
+    try {
+      const aiResponse = await generateCohereResponse(inputText);
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: generateAIResponse(inputText),
+        text: aiResponse,
         isUser: false,
         timestamp: new Date(),
       };
-      setMessages(prev => [...prev, aiMessage]);
-    }, 1000);
+      const finalMessages = [...updatedMessages, aiMessage];
+      saveMessages(finalMessages);
+    } catch (error) {
+      console.error('Error getting AI response:', error);
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        text: 'I apologize, but I\'m having trouble responding right now. Please try again.',
+        isUser: false,
+        timestamp: new Date(),
+      };
+      const finalMessages = [...updatedMessages, errorMessage];
+      saveMessages(finalMessages);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -102,6 +127,17 @@ const ChatInterface = () => {
             </div>
           </div>
         ))}
+        {isLoading && (
+          <div className="flex justify-start animate-slide-in">
+            <div className="bg-surface border border-border rounded-2xl px-4 py-3">
+              <div className="flex space-x-1">
+                <div className="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
+                <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+              </div>
+            </div>
+          </div>
+        )}
         <div ref={messagesEndRef} />
       </div>
 
@@ -119,11 +155,12 @@ const ChatInterface = () => {
               onKeyPress={handleKeyPress}
               placeholder="Share your thoughts..."
               className="rounded-full pr-12 border-border focus:border-primary"
+              disabled={isLoading}
             />
             <Button
               onClick={handleSendMessage}
-              disabled={!inputText.trim()}
-              className="absolute right-1 top-1/2 -translate-y-1/2 rounded-full w-8 h-8 p-0 bg-gradient-primary hover:opacity-90"
+              disabled={!inputText.trim() || isLoading}
+              className="absolute right-1 top-1/2 -translate-y-1/2 rounded-full w-8 h-8 p-0 bg-gradient-primary hover:opacity-90 disabled:opacity-50"
             >
               <Send className="w-4 h-4" />
             </Button>
