@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Send, Mic, Image, Trash2, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { generateCohereResponse } from '@/services/cohereApi';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -161,7 +162,7 @@ const ChatInterface = () => {
   return (
     <div className="flex flex-col h-full bg-gradient-soft">
       {/* Chat Header */}
-      <div className="flex items-center justify-between p-4 border-b border-border bg-surface/80 backdrop-blur-sm">
+      <div className="flex items-center justify-between p-4 border-b border-border bg-surface/80 backdrop-blur-sm shrink-0">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 rounded-full bg-gradient-primary flex items-center justify-center">
             <span className="text-white font-semibold text-sm">AI</span>
@@ -193,72 +194,74 @@ const ChatInterface = () => {
         </div>
       </div>
 
-      {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
-        {messages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
-            <div className="w-16 h-16 rounded-full bg-gradient-primary/10 flex items-center justify-center">
-              <span className="text-2xl">💭</span>
-            </div>
-            <div>
-              <h3 className="font-semibold text-foreground mb-2">AI Chat शुरू करें</h3>
-              <p className="text-muted-foreground text-sm max-w-sm">
-                अपने विचार, भावनाएं या कोई भी बात साझा करें। मैं यहां सुनने के लिए हूं।
-              </p>
-            </div>
-          </div>
-        ) : (
-          messages.map((message) => (
-            <div
-              key={message.id}
-              className={`flex ${message.isUser ? 'justify-end' : 'justify-start'} animate-slide-in`}
-            >
-              <div
-                className={`max-w-[85%] rounded-2xl px-4 py-3 shadow-sm ${
-                  message.isUser
-                    ? 'bg-gradient-primary text-white ml-4'
-                    : message.isError
-                    ? 'bg-destructive/10 border border-destructive/20 text-destructive mr-4'
-                    : 'bg-surface border border-border mr-4'
-                }`}
-              >
-                <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.text}</p>
-                <p className={`text-xs mt-2 ${
-                  message.isUser 
-                    ? 'text-white/70' 
-                    : message.isError 
-                    ? 'text-destructive/70'
-                    : 'text-muted-foreground'
-                }`}>
-                  {message.timestamp.toLocaleTimeString('hi-IN', { 
-                    hour: '2-digit', 
-                    minute: '2-digit' 
-                  })}
+      {/* Messages Area with proper scrolling */}
+      <ScrollArea className="flex-1 px-4">
+        <div className="py-4 space-y-4">
+          {messages.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-full text-center space-y-4 min-h-[400px]">
+              <div className="w-16 h-16 rounded-full bg-gradient-primary/10 flex items-center justify-center">
+                <span className="text-2xl">💭</span>
+              </div>
+              <div>
+                <h3 className="font-semibold text-foreground mb-2">AI Chat शुरू करें</h3>
+                <p className="text-muted-foreground text-sm max-w-sm">
+                  अपने विचार, भावनाएं या कोई भी बात साझा करें। मैं यहां सुनने के लिए हूं।
                 </p>
               </div>
             </div>
-          ))
-        )}
-        
-        {isLoading && (
-          <div className="flex justify-start animate-slide-in">
-            <div className="bg-surface border border-border rounded-2xl px-4 py-3 mr-4">
-              <div className="flex items-center space-x-2">
-                <div className="flex space-x-1">
-                  <div className="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
-                  <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                  <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+          ) : (
+            messages.map((message) => (
+              <div
+                key={message.id}
+                className={`flex ${message.isUser ? 'justify-end' : 'justify-start'} animate-slide-in`}
+              >
+                <div
+                  className={`max-w-[85%] rounded-2xl px-4 py-3 shadow-sm ${
+                    message.isUser
+                      ? 'bg-gradient-primary text-white ml-4'
+                      : message.isError
+                      ? 'bg-destructive/10 border border-destructive/20 text-destructive mr-4'
+                      : 'bg-surface border border-border mr-4'
+                  }`}
+                >
+                  <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.text}</p>
+                  <p className={`text-xs mt-2 ${
+                    message.isUser 
+                      ? 'text-white/70' 
+                      : message.isError 
+                      ? 'text-destructive/70'
+                      : 'text-muted-foreground'
+                  }`}>
+                    {message.timestamp.toLocaleTimeString('hi-IN', { 
+                      hour: '2-digit', 
+                      minute: '2-digit' 
+                    })}
+                  </p>
                 </div>
-                <span className="text-xs text-muted-foreground">AI सोच रहा है...</span>
+              </div>
+            ))
+          )}
+          
+          {isLoading && (
+            <div className="flex justify-start animate-slide-in">
+              <div className="bg-surface border border-border rounded-2xl px-4 py-3 mr-4">
+                <div className="flex items-center space-x-2">
+                  <div className="flex space-x-1">
+                    <div className="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
+                    <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                    <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                  </div>
+                  <span className="text-xs text-muted-foreground">AI सोच रहा है...</span>
+                </div>
               </div>
             </div>
-          </div>
-        )}
-        <div ref={messagesEndRef} />
-      </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+      </ScrollArea>
 
       {/* Input Area */}
-      <div className="border-t border-border bg-surface/80 backdrop-blur-sm p-4">
+      <div className="border-t border-border bg-surface/80 backdrop-blur-sm p-4 shrink-0">
         <div className="flex items-center space-x-3">
           <Button variant="ghost" size="sm" className="rounded-full p-2 hover:bg-accent/10">
             <Image className="w-4 h-4 text-muted-foreground" />

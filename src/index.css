@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -76,20 +75,26 @@
   html {
     scroll-behavior: smooth;
     overflow-x: hidden;
+    height: 100%;
   }
   
   body {
     @apply bg-background text-foreground font-sans antialiased;
     background: var(--background-gradient);
     min-height: 100vh;
+    height: 100%;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior: none;
   }
   
   /* Ensure proper scrolling on mobile */
   #root {
     min-height: 100vh;
+    height: 100%;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
   }
 }
 

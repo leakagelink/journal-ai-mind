@@ -2,6 +2,7 @@
 import { Menu, Settings, Search, Info, Shield, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
+import LanguageSelector from './LanguageSelector';
 
 interface HeaderProps {
   onNavigate?: (page: string) => void;
@@ -43,9 +44,7 @@ const Header = ({ onNavigate }: HeaderProps) => {
           </div>
           
           <div className="flex items-center space-x-2">
-            <Button variant="ghost" size="sm" className="rounded-full p-2">
-              <Search className="w-4 h-4" />
-            </Button>
+            <LanguageSelector />
             <Button 
               variant="ghost" 
               size="sm" 

@@ -79,11 +79,11 @@ const Index = () => {
       <Header onNavigate={handleNavigation} />
       
       {/* Ad Banner at top */}
-      <div className="px-4 pt-2">
+      <div className="px-4 pt-2 shrink-0">
         <AdBanner className="mb-2" />
       </div>
       
-      <main className="flex-1 overflow-y-auto pb-16">
+      <main className="flex-1 min-h-0">
         {renderCurrentPage()}
       </main>
       
